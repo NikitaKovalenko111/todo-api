@@ -7,14 +7,13 @@ const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const todo_router_1 = require("./routes/todo-router");
 const types_1 = require("./types");
+const cors_1 = __importDefault(require("cors"));
 const server = (0, express_1.default)();
 const port = process.env.PORT || 3000;
 const parseMiddleware = (0, body_parser_1.default)({});
+server.use((0, cors_1.default)());
 server.use(parseMiddleware);
 server.use('/todos', todo_router_1.todoRouter);
 server.get('/', (req, res) => {
     res.send(types_1.Statuses.NotFound);
-});
-server.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
 });
