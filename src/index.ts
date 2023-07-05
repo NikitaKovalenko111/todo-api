@@ -17,3 +17,7 @@ server.use('/todos', todoRouter)
 server.get('/', (req: Request, res: Response) => {
   res.send(Statuses.NotFound)
 })
+
+server.listen(port, () => {
+  console.log(`The server has been started on the port: ${port}`);
+})
