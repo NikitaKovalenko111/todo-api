@@ -1,5 +1,4 @@
 import express, { Request, Response, Express } from "express"
-import bodyParser from "body-parser"
 import { todoRouter } from "./routes/todo-router"
 import { Statuses } from "./types"
 import cors from 'cors'
