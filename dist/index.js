@@ -4,15 +4,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const body_parser_1 = __importDefault(require("body-parser"));
 const todo_router_1 = require("./routes/todo-router");
 const types_1 = require("./types");
 const cors_1 = __importDefault(require("cors"));
 const server = (0, express_1.default)();
 const port = process.env.PORT || 3000;
-const parseMiddleware = (0, body_parser_1.default)({});
+const parseJsonMiddleware = express_1.default.json();
+const parseUrlMiddleware = express_1.default.urlencoded({ extended: true });
 server.use((0, cors_1.default)());
-server.use(parseMiddleware);
+server.use(parseJsonMiddleware);
+server.use(parseUrlMiddleware);
 server.use('/todos', todo_router_1.todoRouter);
 server.get('/', (req, res) => {
     res.send(types_1.Statuses.NotFound);
