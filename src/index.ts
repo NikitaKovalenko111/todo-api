@@ -7,9 +7,11 @@ import cors from 'cors'
 const server: Express = express()
 const port: string | number = process.env.PORT || 3000
 
-const parseMiddleware = bodyParser({})
+const parseJsonMiddleware = express.json()
+const parseUrlMiddleware = express.urlencoded({ extended: true })
 server.use(cors())
-server.use(parseMiddleware)
+server.use(parseJsonMiddleware)
+server.use(parseUrlMiddleware)
 server.use('/todos', todoRouter)
 
 server.get('/', (req: Request, res: Response) => {
