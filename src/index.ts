@@ -14,7 +14,7 @@ server.use(parseUrlMiddleware)
 server.use('/todos', todoRouter)
 
 server.get('/', (req: Request, res: Response) => {
-  res.send(Statuses.NotFound)
+  res.sendStatus(Statuses.NotFound)
 })
 
 server.listen(port, () => {
