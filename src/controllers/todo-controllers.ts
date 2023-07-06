@@ -21,7 +21,7 @@ export const deleteTodoByIdController = (req: Request, res: Response) => {
 }
 
 export const postTodoController = (req: Request, res: Response) => {
-    const newData: todoItemType = todoRepository.postData(req.body.value, false)
+    const newData: todoItemType = todoRepository.postData(req.body.target, false)
   
     res.json(newData).sendStatus(Statuses.Created)
 }
