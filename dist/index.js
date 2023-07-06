@@ -16,7 +16,7 @@ server.use(parseJsonMiddleware);
 server.use(parseUrlMiddleware);
 server.use('/todos', todo_router_1.todoRouter);
 server.get('/', (req, res) => {
-    res.send("Здесь ничего нет!");
+    res.sendStatus(types_1.Statuses.NotFound);
 });
 server.listen(port, () => {
     console.log(`The server has been started on the port: ${port}`);
