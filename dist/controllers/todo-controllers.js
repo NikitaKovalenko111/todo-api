@@ -23,7 +23,7 @@ const deleteTodoByIdController = (req, res) => {
 };
 exports.deleteTodoByIdController = deleteTodoByIdController;
 const postTodoController = (req, res) => {
-    const newData = todo_repository_1.default.postData(req.body.value, false);
+    const newData = todo_repository_1.default.postData(req.body.target, false);
     res.json(newData).sendStatus(types_1.Statuses.Created);
 };
 exports.postTodoController = postTodoController;
