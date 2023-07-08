@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 let todos = [];
 const dataRepository = {
-    getData: () => todos,
+    getData: (target) => todos.filter(el => el.target.toLocaleLowerCase().includes(String(target === null || target === void 0 ? void 0 : target.toLocaleLowerCase()))),
     getDataById: (id) => todos.find(el => el.id === id),
     deleteDataById: (id) => {
         const responseData = todos.findIndex(el => el.id === id);

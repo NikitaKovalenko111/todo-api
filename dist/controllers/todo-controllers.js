@@ -7,7 +7,7 @@ exports.changeTodoByIdController = exports.postTodoController = exports.deleteTo
 const todo_repository_1 = __importDefault(require("../repositories/todo-repository"));
 const types_1 = require("../types");
 const getTodosController = (req, res) => {
-    res.json(todo_repository_1.default.getData()).sendStatus(types_1.Statuses.OK);
+    res.json(todo_repository_1.default.getData(String(req.query.target))).sendStatus(types_1.Statuses.OK);
 };
 exports.getTodosController = getTodosController;
 const getTodosByIdController = (req, res) => {
