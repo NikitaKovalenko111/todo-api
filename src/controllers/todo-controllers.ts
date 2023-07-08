@@ -3,7 +3,7 @@ import { Request, Response } from "express"
 import { Statuses, todoItemType } from "../types"
 
 export const getTodosController = (req: Request, res: Response): void => {
-    res.json(todoRepository.getData()).sendStatus(Statuses.OK)
+    res.json(todoRepository.getData(String(req.query.target))).sendStatus(Statuses.OK)
 }
 
 export const getTodosByIdController = (req: Request, res: Response) => {

@@ -5,7 +5,7 @@ let todos: Array<todoItemType> = [
 ]
 
 const dataRepository: todoRepositoryType = {
-    getData: () => todos,
+    getData: (target?: string) => todos.filter(el => el.target.toLocaleLowerCase().includes(String(target?.toLocaleLowerCase()))),
     getDataById: (id) => todos.find(el => el.id === id),
     deleteDataById: (id) => {
         const responseData: number = todos.findIndex(el => el.id === id)

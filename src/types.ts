@@ -20,7 +20,7 @@ export interface changeTodoByIdBody {
 }
 
 export interface todoRepositoryType {
-    getData: () => Array<todoItemType>
+    getData: (target: string) => Array<todoItemType>
     getDataById: (id: number) => todoItemType | undefined
     deleteDataById: (id: number) => number
     postData: (target: string, isCompleted: boolean) => todoItemType
