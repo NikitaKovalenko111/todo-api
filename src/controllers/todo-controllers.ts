@@ -3,14 +3,14 @@ import { Request, Response } from "express"
 import { Statuses, todoItemType } from "../types"
 
 export const getTodosController = (req: Request, res: Response): void => {
-    res.json(todoRepository.getData(String(req.query.target))).sendStatus(Statuses.OK)
+    res.status(Statuses.OK).json(todoRepository.getData(String(req.query.target)))
 }
 
 export const getTodosByIdController = (req: Request, res: Response) => {
     const currentId: number = Number(req.params.id)
     const responseData: todoItemType | undefined = todoRepository.getDataById(currentId)
   
-    res.json(responseData ? responseData : Statuses.NotFound).sendStatus(Statuses.OK)
+    res.status(Statuses.OK).json(responseData ? responseData : Statuses.NotFound)
 }
 
 export const deleteTodoByIdController = (req: Request, res: Response) => {
@@ -23,12 +23,12 @@ export const deleteTodoByIdController = (req: Request, res: Response) => {
 export const postTodoController = (req: Request, res: Response) => {
     const newData: todoItemType = todoRepository.postData(req.body.target, false)
   
-    res.json(newData).sendStatus(Statuses.Created)
+    res.status(Statuses.Created).json(newData)
 }
 
 export const changeTodoByIdController = (req: Request, res: Response) => {
     const currentId: number = Number(req.params.id)
     const currentData: todoItemType | undefined = todoRepository.changeDataById(currentId, req.body)
 
-    currentData ? res.sendStatus(Statuses.OK) : Statuses.NotFound
+    currentData ? res.sendStatus(Statuses.OK) : res.sendStatus(Statuses.NotFound)
 }
