@@ -7,13 +7,13 @@ exports.changeTodoByIdController = exports.postTodoController = exports.deleteTo
 const todo_repository_1 = __importDefault(require("../repositories/todo-repository"));
 const types_1 = require("../types");
 const getTodosController = (req, res) => {
-    res.json(todo_repository_1.default.getData(String(req.query.target))).sendStatus(types_1.Statuses.OK);
+    res.status(types_1.Statuses.OK).json(todo_repository_1.default.getData(String(req.query.target)));
 };
 exports.getTodosController = getTodosController;
 const getTodosByIdController = (req, res) => {
     const currentId = Number(req.params.id);
     const responseData = todo_repository_1.default.getDataById(currentId);
-    res.json(responseData ? responseData : types_1.Statuses.NotFound).sendStatus(types_1.Statuses.OK);
+    res.status(types_1.Statuses.OK).json(responseData ? responseData : types_1.Statuses.NotFound);
 };
 exports.getTodosByIdController = getTodosByIdController;
 const deleteTodoByIdController = (req, res) => {
@@ -24,12 +24,12 @@ const deleteTodoByIdController = (req, res) => {
 exports.deleteTodoByIdController = deleteTodoByIdController;
 const postTodoController = (req, res) => {
     const newData = todo_repository_1.default.postData(req.body.target, false);
-    res.json(newData).sendStatus(types_1.Statuses.Created);
+    res.status(types_1.Statuses.Created).json(newData);
 };
 exports.postTodoController = postTodoController;
 const changeTodoByIdController = (req, res) => {
     const currentId = Number(req.params.id);
     const currentData = todo_repository_1.default.changeDataById(currentId, req.body);
-    currentData ? res.sendStatus(types_1.Statuses.OK) : types_1.Statuses.NotFound;
+    currentData ? res.sendStatus(types_1.Statuses.OK) : res.sendStatus(types_1.Statuses.NotFound);
 };
 exports.changeTodoByIdController = changeTodoByIdController;
