@@ -3,7 +3,7 @@ import { Request, Response } from "express"
 import { Statuses, todoItemType } from "../types"
 
 export const getTodosController = (req: Request, res: Response): void => {
-    todoRepository.getData(req.query.target as string).then(data => {
+    todoRepository.getData(req.query.target as string).then(data => {  
         res.status(Statuses.OK).json(data)
     })
 }
