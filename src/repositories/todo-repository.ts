@@ -1,43 +1,52 @@
+import { HydratedDocument } from 'mongoose';
 import { todoItemType, todoRepositoryType } from "../types";
-
-let todos: Array<todoItemType> = [
-    
-]
+import Goal from "../models/goal-model";
 
 const dataRepository: todoRepositoryType = {
-    getData: (target?: string) => todos.filter(el => el.target.toLocaleLowerCase().includes(String(target?.toLocaleLowerCase()))),
-    getDataById: (id) => todos.find(el => el.id === id),
-    deleteDataById: (id) => {
-        const responseData: number = todos.findIndex(el => el.id === id)
-        todos.splice(responseData, 1)
-        return responseData
+    getData: async (target: string) => {
+        console.log(target);
+        
+        const goals = await Goal.find({ target: {$regex: target} }).then(el => el)
+        
+        return goals as Array<HydratedDocument<todoItemType>>
     },
-    postData: (value, isCompleted) => {
+    getDataById: async (id) => {
+        const goal = await Goal.findById(id).then(el => el)
+        
+        return goal as HydratedDocument<todoItemType>
+    },
+    deleteDataById: async (id) => {
+        const responseData = await Goal.findByIdAndRemove(id).then(el => el)
+        
+        return responseData as HydratedDocument<todoItemType>
+    },
+    postData: async (value, isCompleted) => {
         const newData: todoItemType = {
-            id: Number(new Date()),
             target: value,
             isCompleted: isCompleted,
-            date: new Date(Date.now()).toLocaleString(),
+            date: new Date(Date.now()),
             dateIsCompleted: undefined
         }
           
-        todos.push(newData)
+        const responseData = await Goal.create(newData)
 
-        return newData
+        return responseData as HydratedDocument<todoItemType>
     },
-    changeDataById: (id, body) => {
-        const currentData = todos.find(el => el.id === id)
-  
-        if (currentData) {
-          currentData.target = body.target
-          currentData.isCompleted = body.isCompleted
-          if (currentData.isCompleted === true)
-            currentData.dateIsCompleted = new Date(Date.now()).toLocaleString()
-          else
-            currentData.dateIsCompleted = undefined
+    changeDataById: async (id, body) => {
+        let patchObject: todoItemType = {
+            target: body.target, 
+            isCompleted: body.isCompleted,
+            date: new Date(Date.now()),
+            dateIsCompleted: undefined
         }
 
-        return currentData
+        if (body.isCompleted) {
+            patchObject.dateIsCompleted = body.isCompleted ? new Date(Date.now()) : undefined
+        }
+
+        const changedData = await Goal.findByIdAndUpdate(id, patchObject)
+
+        return changedData as HydratedDocument<todoItemType>
     },
 }
 

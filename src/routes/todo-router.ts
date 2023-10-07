@@ -12,4 +12,4 @@ todoRouter.delete('/:id', deleteTodoByIdController)
   
 todoRouter.post('/', targetValidatorMiddleware, postTodoController)
   
-todoRouter.put('/:id', targetValidatorMiddleware, changeTodoByIdController)
+todoRouter.patch('/:id', targetValidatorMiddleware, changeTodoByIdController)

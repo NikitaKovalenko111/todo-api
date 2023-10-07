@@ -3,32 +3,34 @@ import { Request, Response } from "express"
 import { Statuses, todoItemType } from "../types"
 
 export const getTodosController = (req: Request, res: Response): void => {
-    res.status(Statuses.OK).json(todoRepository.getData(String(req.query.target)))
+    todoRepository.getData(req.query.target as string).then(data => {
+        res.status(Statuses.OK).json(data)
+    })
 }
 
 export const getTodosByIdController = (req: Request, res: Response) => {
-    const currentId: number = Number(req.params.id)
-    const responseData: todoItemType | undefined = todoRepository.getDataById(currentId)
-  
-    res.status(Statuses.OK).json(responseData ? responseData : Statuses.NotFound)
+    const currentId: string = req.params.id
+    todoRepository.getDataById(currentId).then((data) => {
+        res.status(Statuses.OK).json(data ? data : Statuses.NotFound)
+    })
 }
 
 export const deleteTodoByIdController = (req: Request, res: Response) => {
-    const currentId: number = Number(req.params.id)
-    const responseData: number = todoRepository.deleteDataById(currentId)
-
-    res.sendStatus(responseData != -1 ? Statuses.GoodWithoutContent : Statuses.NotFound)
+    const currentId: string = req.params.id
+    todoRepository.deleteDataById(currentId).then((data) => {
+        res.status(Statuses.OK).json(data ? data : Statuses.NotFound)
+    })
 }
 
 export const postTodoController = (req: Request, res: Response) => {
-    const newData: todoItemType = todoRepository.postData(req.body.target, false)
-  
-    res.status(Statuses.Created).json(newData)
+    todoRepository.postData(req.body.target, false).then((data) => {
+        res.status(data ? Statuses.Created : Statuses.NotFound).json(data)
+    })
 }
 
 export const changeTodoByIdController = (req: Request, res: Response) => {
-    const currentId: number = Number(req.params.id)
-    const currentData: todoItemType | undefined = todoRepository.changeDataById(currentId, req.body)
-
-    currentData ? res.sendStatus(Statuses.OK) : res.sendStatus(Statuses.NotFound)
+    const currentId: string = req.params.id
+    todoRepository.changeDataById(currentId, req.body).then((data) => {
+        res.status(Statuses.OK).json(data)
+    })
 }

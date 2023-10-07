@@ -1,3 +1,5 @@
+import mongoose, { HydratedDocument, Types } from "mongoose"
+
 export enum Statuses {
     "GoodWithoutContent" = 204,
     "NotFound" = 404,
@@ -8,10 +10,10 @@ export enum Statuses {
 
 export interface todoItemType {
     target: string
-    id: number
+    id?: Types.ObjectId | number
     isCompleted: boolean
-    date: string
-    dateIsCompleted: string | undefined
+    date: Date
+    dateIsCompleted: Date | undefined | boolean
 }
 
 export interface changeTodoByIdBody {
@@ -20,11 +22,11 @@ export interface changeTodoByIdBody {
 }
 
 export interface todoRepositoryType {
-    getData: (target: string) => Array<todoItemType>
-    getDataById: (id: number) => todoItemType | undefined
-    deleteDataById: (id: number) => number
-    postData: (target: string, isCompleted: boolean) => todoItemType
-    changeDataById: (id: number, body: changeTodoByIdBody) => todoItemType | undefined
+    getData: (target: string) => Promise<Array<HydratedDocument<todoItemType>>>
+    getDataById: (id: string) => Promise<HydratedDocument<todoItemType>>
+    deleteDataById: (id: string) => Promise<HydratedDocument<todoItemType>>
+    postData: (target: string, isCompleted: boolean) => Promise<HydratedDocument<todoItemType>>
+    changeDataById: (id: string, body: changeTodoByIdBody) => Promise<HydratedDocument<todoItemType>>
 }
 
 export type todoType = Array<todoItemType>

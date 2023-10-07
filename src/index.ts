@@ -5,12 +5,14 @@ import cors from 'cors'
 import morgan, { TokenIndexer } from "morgan"
 import { log, success } from "./utils"
 import chalk from 'chalk'
+import dbConnect from "./db"
 
 const server: Express = express()
 const port: string | number = process.env.PORT || 3000
 
 const parseJsonMiddleware = express.json()
 const parseUrlMiddleware = express.urlencoded({ extended: true })
+dbConnect()
 server.use(cors())
 server.use(morgan(function (tokens, req: Request, res: Response) {
   return chalk.cyan.bold(`METHOD: ${tokens.method(req, res)} | URL: ${tokens.url(req, res)} - ${tokens['response-time'](req, res)} ms | STATUS: ${tokens.status(req, res)} | IP: ${tokens['remote-addr'](req, res)} | DATE: ${tokens.date(req, res)}`)
