@@ -9,4 +9,4 @@ exports.todoRouter.get('/', todo_controllers_1.getTodosController);
 exports.todoRouter.get('/:id', todo_controllers_1.getTodosByIdController);
 exports.todoRouter.delete('/:id', todo_controllers_1.deleteTodoByIdController);
 exports.todoRouter.post('/', todo_middlewares_1.targetValidatorMiddleware, todo_controllers_1.postTodoController);
-exports.todoRouter.put('/:id', todo_middlewares_1.targetValidatorMiddleware, todo_controllers_1.changeTodoByIdController);
+exports.todoRouter.patch('/:id', todo_middlewares_1.targetValidatorMiddleware, todo_controllers_1.changeTodoByIdController);
