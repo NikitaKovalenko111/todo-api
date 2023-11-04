@@ -3,9 +3,7 @@ import { todoItemType, todoRepositoryType } from "../types";
 import Goal from "../models/goal-model";
 
 const dataRepository: todoRepositoryType = {
-    getData: async (target: string) => {
-        console.log(target);
-        
+    getData: async (target: string) => {  
         const goals = await Goal.find({ target: {$regex: target} }).then(el => el)
         
         return goals as Array<HydratedDocument<todoItemType>>
